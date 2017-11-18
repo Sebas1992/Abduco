@@ -65,17 +65,56 @@ void Application::framebuffer_size_callback(GLFWwindow* fenetre, int hauteur, in
 
 void Application::run()
 {   
-    const float vertices[] = { // Positions          // Couleurs          // TexCoord
-                              -0.5f, -0.5f, 0.0f,    1.0f, 0.0f, 0.0f,    0.0f, 0.0f,
-                               0.5f, -0.5f, 0.0f,    0.0f, 1.0f, 0.0f,    1.0f, 0.0f,
-                               0.5f,  0.5f, 0.0f,    0.0f, 0.0f, 1.0f,    1.0f, 1.0f,
-                              -0.5f,  0.5f, 0.0f,    0.0f, 0.0f, 0.0f,    0.0f, 1.0f};
+	float vertices[] = {
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+		0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+	};
     
+	/*
     const unsigned int indices[] = {
         0, 1, 2, 
         0, 3, 2
     };
-     
+     */
     //VAO
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -85,21 +124,20 @@ void Application::run()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)(3*sizeof(GLfloat)));
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)(6*sizeof(GLfloat)));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), (void*)0);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), (void*)(3*sizeof(GLfloat)));
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
-    glEnableVertexAttribArray(2);
    
+	/*
     //EBO
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-    
+    */
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     
     shaderProgram = new Shader("./Shaders/vertex.vs", "./Shaders/fragment.fs");
     
@@ -111,10 +149,12 @@ void Application::run()
     shaderProgram->utiliserProgramme();
     glUniform1i(glGetUniformLocation(shaderProgram->get_program(), "texture1"), 0);
     glUniform1i(glGetUniformLocation(shaderProgram->get_program(), "texture2"), 1);
+
+	glEnable(GL_DEPTH_TEST);
     
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    //glBindVertexArray(0);
+    //glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     while(!glfwWindowShouldClose(_fenetre))
     {
@@ -139,36 +179,45 @@ void Application::processInput(GLFWwindow* fenetre)
 
 void Application::render()
 {
-    const GLfloat color[] = {0.2f, 0.3f, 0.3f, 1.0f};
-    glClearBufferfv(GL_COLOR, 0, color);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+	shaderProgram->utiliserProgramme();
+	glBindVertexArray(VAO);
     
+	glm::mat4 modele;
+	glm::mat4 vue, projection;
+	modele = glm::rotate(modele, glm::radians((float)glfwGetTime() * 50), glm::vec3(0.5f, 1.0f, 0.0f));
+	vue = glm::translate(vue, glm::vec3(0.0f, 0.0f, -3.0f));
+	projection = glm::perspective(glm::radians(45.0f), (float)LARGEUR / (float)HAUTEUR, 0.1f, 100.0f);
+
+	unsigned int modeleLocation = glGetUniformLocation(shaderProgram->get_program(), "modele");
+	unsigned int vueLocation = glGetUniformLocation(shaderProgram->get_program(), "vue");
+	unsigned int projectionLocation = glGetUniformLocation(shaderProgram->get_program(), "projection");
+
+	//glUniformMatrix4fv(modeleLocation, 1, GL_FALSE, glm::value_ptr(modele));
+	glUniformMatrix4fv(vueLocation, 1, GL_FALSE, glm::value_ptr(vue));
+	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
+
     // Determine quelles texture ut lier et les lie
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture1->get_texture());
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2->get_texture());
-    
-    shaderProgram->utiliserProgramme();
-    glBindVertexArray(VAO);
-    
-    GLClearError();
-    //glDrawArrays(GL_TRIANGLES, 0, 3);
+	
+	for (int i = 0; i < 10; i++)
+	{
+		glm::mat4 modele;
+		modele = glm::translate(modele, cubePositions[i]);
+		float angle = (20.0f * i);
+		modele = glm::rotate(modele, glm::radians(angle) * (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.0f));
+		glUniformMatrix4fv(modeleLocation, 1, GL_FALSE, glm::value_ptr(modele));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+	}
 
-	glm::mat4 trans;
-	trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-	trans = glm::rotate(trans, glm::radians((float)glfwGetTime() * 100), glm::vec3(0.0f, 0.0f, 1.0f));
-	//trans = glm::scale(trans, glm::vec3(0.5f, 0.5f, 1.0f));
+	GLClearError();
 
-	unsigned int matLocation = glGetUniformLocation(shaderProgram->get_program(), "transformation");
-	glUniformMatrix4fv(matLocation, 1, GL_FALSE, glm::value_ptr(trans));
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-	glm::mat4 trans1;
-	trans1 = glm::translate(trans1, glm::vec3(-0.5f, 0.5f, 0.0f));
-	//trans = glm::rotate(trans, glm::radians((float)glfwGetTime() * 100), glm::vec3(0.0f, 0.0f, 1.0f));
-	trans1 = glm::scale(trans1, glm::vec3(sin(glfwGetTime()), 0.5f, 1.0f));
-	glUniformMatrix4fv(matLocation, 1, GL_FALSE, glm::value_ptr(trans1));
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    //glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
     GLCheckError();
 }
 
