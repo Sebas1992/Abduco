@@ -115,7 +115,7 @@ void Application::run()
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    
+
     while(!glfwWindowShouldClose(_fenetre))
     {
         processInput(_fenetre);
@@ -153,8 +153,22 @@ void Application::render()
     
     GLClearError();
     //glDrawArrays(GL_TRIANGLES, 0, 3);
-    
+
+	glm::mat4 trans;
+	trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+	trans = glm::rotate(trans, glm::radians((float)glfwGetTime() * 100), glm::vec3(0.0f, 0.0f, 1.0f));
+	//trans = glm::scale(trans, glm::vec3(0.5f, 0.5f, 1.0f));
+
+	unsigned int matLocation = glGetUniformLocation(shaderProgram->get_program(), "transformation");
+	glUniformMatrix4fv(matLocation, 1, GL_FALSE, glm::value_ptr(trans));
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glm::mat4 trans1;
+	trans1 = glm::translate(trans1, glm::vec3(-0.5f, 0.5f, 0.0f));
+	//trans = glm::rotate(trans, glm::radians((float)glfwGetTime() * 100), glm::vec3(0.0f, 0.0f, 1.0f));
+	trans1 = glm::scale(trans1, glm::vec3(sin(glfwGetTime()), 0.5f, 1.0f));
+	glUniformMatrix4fv(matLocation, 1, GL_FALSE, glm::value_ptr(trans1));
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     GLCheckError();
 }
 
