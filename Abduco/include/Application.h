@@ -24,6 +24,7 @@
 #include"Texture.h"
 #include"TextureJPEG.h"
 #include"TexturePNG.h"
+#include"Camera.h"
 
 #include<iostream>
 #include"Shader.h"
@@ -48,6 +49,7 @@ private:
     Shader* shaderProgram;
     TextureJPEG* texture1;
     TexturePNG* texture2;
+	Camera* camera;
 
 	glm::vec3 cubePositions[10] = {
 		glm::vec3(0.0f,  0.0f,  0.0f),

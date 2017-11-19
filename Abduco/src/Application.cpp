@@ -49,6 +49,7 @@ Application::Application()
 
 Application::~Application() 
 {
+	delete this->camera;
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glfwTerminate();
@@ -150,6 +151,9 @@ void Application::run()
     glUniform1i(glGetUniformLocation(shaderProgram->get_program(), "texture2"), 1);
 
 	glEnable(GL_DEPTH_TEST);
+
+	//Initialisation de la fenetre
+	camera = new Camera();
     
     //glBindVertexArray(0);
     //glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -185,17 +189,21 @@ void Application::render()
 	glBindVertexArray(VAO);
     
 	glm::mat4 modele;
-	glm::mat4 vue, projection;
+	glm::mat4 projection;
 	modele = glm::rotate(modele, glm::radians((float)glfwGetTime() * 50), glm::vec3(0.5f, 1.0f, 0.0f));
-	vue = glm::translate(vue, glm::vec3(0.0f, 0.0f, -3.0f));
 	projection = glm::perspective(glm::radians(45.0f), (float)LARGEUR / (float)HAUTEUR, 0.1f, 100.0f);
+
+	float rayon = 10.0f;
+	float camX = sin(glfwGetTime()) * rayon;
+	float camZ = cos(glfwGetTime()) * rayon;
+	camera->set_vue(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	unsigned int modeleLocation = glGetUniformLocation(shaderProgram->get_program(), "modele");
 	unsigned int vueLocation = glGetUniformLocation(shaderProgram->get_program(), "vue");
 	unsigned int projectionLocation = glGetUniformLocation(shaderProgram->get_program(), "projection");
 
 	//glUniformMatrix4fv(modeleLocation, 1, GL_FALSE, glm::value_ptr(modele));
-	glUniformMatrix4fv(vueLocation, 1, GL_FALSE, glm::value_ptr(vue));
+	glUniformMatrix4fv(vueLocation, 1, GL_FALSE, glm::value_ptr(camera->get_vue()));
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
     // Determine quelles texture ut lier et les lie
