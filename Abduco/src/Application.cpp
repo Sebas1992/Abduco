@@ -25,6 +25,8 @@ Application::Application()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+	glfwSetErrorCallback(errorCallback);
     
     //Set-up de la fenetre
     _fenetre = glfwCreateWindow(LARGEUR, HAUTEUR, "LearnOpenGL", NULL, NULL);
@@ -35,8 +37,6 @@ Application::Application()
     }
     
     glfwMakeContextCurrent(_fenetre);
-    
-    glfwSetFramebufferSizeCallback(_fenetre, framebuffer_size_callback);
     
     //Set-up de GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -57,10 +57,9 @@ Application::~Application()
     delete texture2;
 }
 
-//Methode pour redimensionner le viewport quand l'utilisateur redimensionne la fenetre
-void Application::framebuffer_size_callback(GLFWwindow* fenetre, int hauteur, int largeur)
+void Application::errorCallback(int error, const char* err_str)
 {
-    glViewport(0, 0, largeur, hauteur);
+	std::cerr << "GLFW Error " << error << ": " << err_str << std::endl;
 }
 
 void Application::run()
@@ -208,8 +207,8 @@ void Application::render()
 	for (int i = 0; i < 10; i++)
 	{
 		glm::mat4 modele;
+		float angle = 20.0f * i;
 		modele = glm::translate(modele, cubePositions[i]);
-		float angle = (20.0f * i);
 		modele = glm::rotate(modele, glm::radians(angle) * (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.0f));
 		glUniformMatrix4fv(modeleLocation, 1, GL_FALSE, glm::value_ptr(modele));
 		glDrawArrays(GL_TRIANGLES, 0, 36);

@@ -32,7 +32,7 @@ class Application {
 public:
     Application();
     virtual ~Application();
-    static void framebuffer_size_callback(GLFWwindow*, int hauteur, int largeur);
+	static void errorCallback(int error, const char* err_str);
     static void GLClearError();
     static void GLCheckError();
     void run();
