@@ -154,15 +154,15 @@ void Application::run()
 
 	//Initialisation de la fenetre
 	camera = new Camera();
-    
-    //glBindVertexArray(0);
-    //glBindBuffer(GL_ARRAY_BUFFER, 0);
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     while(!glfwWindowShouldClose(_fenetre))
     {
         processInput(_fenetre);
-        
+		// utilise pour la normalisation de la vitesse de la camera
+		currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
         this->render();
         
         glfwSwapBuffers(_fenetre);
@@ -178,6 +178,28 @@ void Application::processInput(GLFWwindow* fenetre)
     {
         glfwSetWindowShouldClose(fenetre, true);
     }
+
+	vitesseCamera = 0.05f * currentFrame;
+	if (glfwGetKey(this->_fenetre, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		glm::vec3 nouvellePosition = camera->get_position() += vitesseCamera * camera->get_cible();
+		this->camera->set_vue(nouvellePosition);
+	}
+	if (glfwGetKey(this->_fenetre, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		glm::vec3 nouvellePosition = camera->get_position() -= vitesseCamera * camera->get_cible();
+		this->camera->set_vue(nouvellePosition);
+	}
+	if (glfwGetKey(this->_fenetre, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		glm::vec3 nouvellePosition = camera->get_position() -= glm::normalize(glm::cross(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f))) * vitesseCamera;
+		this->camera->set_vue(nouvellePosition);
+	}
+	if (glfwGetKey(this->_fenetre, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		glm::vec3 nouvellePosition = camera->get_position() += glm::normalize(glm::cross(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f))) * vitesseCamera;
+		this->camera->set_vue(nouvellePosition);
+	}
 }
 
 void Application::render()
@@ -196,7 +218,6 @@ void Application::render()
 	float rayon = 10.0f;
 	float camX = sin(glfwGetTime()) * rayon;
 	float camZ = cos(glfwGetTime()) * rayon;
-	camera->set_vue(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	unsigned int modeleLocation = glGetUniformLocation(shaderProgram->get_program(), "modele");
 	unsigned int vueLocation = glGetUniformLocation(shaderProgram->get_program(), "vue");

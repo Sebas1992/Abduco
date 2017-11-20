@@ -19,6 +19,7 @@
 #include<glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
+#include<glm//gtx/string_cast.hpp>
 #include<iostream>
 #include"Shader.h"
 #include"Texture.h"
@@ -50,6 +51,10 @@ private:
     TextureJPEG* texture1;
     TexturePNG* texture2;
 	Camera* camera;
+	float deltaTime;
+	float lastFrame;
+	float currentFrame;
+	float vitesseCamera;
 
 	glm::vec3 cubePositions[10] = {
 		glm::vec3(0.0f,  0.0f,  0.0f),

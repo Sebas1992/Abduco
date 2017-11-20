@@ -22,11 +22,11 @@ public:
 	glm::mat4 get_vue() { return vue; }
 
 	// Mutateurs
-	void set_vue(glm::vec3 position, glm::vec3 cible, glm::vec3 haut)
+	void set_vue(glm::vec3 position, glm::vec3 cible = glm::vec3(0.0f,0.0f, -1.0f), glm::vec3 haut = glm::vec3(0.0f, 1.0f, 0.0f));
+
+	void set_position(glm::vec3 position)
 	{
 		this->position = position;
-		this->cible = cible;
-		this->vue = glm::lookAt(this->position, this->cible, haut);
 	}
 
 private:
