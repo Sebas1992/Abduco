@@ -172,36 +172,6 @@ void Application::run()
     glBindVertexArray(0);
 }
 
-void Application::processInput(GLFWwindow* fenetre)
-{
-    if(glfwGetKey(fenetre, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    {
-        glfwSetWindowShouldClose(fenetre, true);
-    }
-
-	vitesseCamera = 0.05f * currentFrame;
-	if (glfwGetKey(this->_fenetre, GLFW_KEY_W) == GLFW_PRESS)
-	{
-		glm::vec3 nouvellePosition = camera->get_position() += vitesseCamera * camera->get_cible();
-		this->camera->set_vue(nouvellePosition);
-	}
-	if (glfwGetKey(this->_fenetre, GLFW_KEY_S) == GLFW_PRESS)
-	{
-		glm::vec3 nouvellePosition = camera->get_position() -= vitesseCamera * camera->get_cible();
-		this->camera->set_vue(nouvellePosition);
-	}
-	if (glfwGetKey(this->_fenetre, GLFW_KEY_A) == GLFW_PRESS)
-	{
-		glm::vec3 nouvellePosition = camera->get_position() -= glm::normalize(glm::cross(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f))) * vitesseCamera;
-		this->camera->set_vue(nouvellePosition);
-	}
-	if (glfwGetKey(this->_fenetre, GLFW_KEY_D) == GLFW_PRESS)
-	{
-		glm::vec3 nouvellePosition = camera->get_position() += glm::normalize(glm::cross(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f))) * vitesseCamera;
-		this->camera->set_vue(nouvellePosition);
-	}
-}
-
 void Application::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -260,4 +230,30 @@ void Application::GLCheckError()
     {
         std::cerr << "OpenGL error: " << error << std::endl;
     }
+}
+
+void Application::processInput(GLFWwindow* fenetre)
+{
+	if (glfwGetKey(fenetre, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	{
+		glfwSetWindowShouldClose(fenetre, true);
+	}
+
+	if (glfwGetKey(this->_fenetre, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		camera->traitementClavier(AVANT, deltaTime);
+	}
+	
+	if (glfwGetKey(this->_fenetre, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		camera->traitementClavier(ARRIERE, deltaTime);
+	}
+	if (glfwGetKey(this->_fenetre, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		camera->traitementClavier(GAUCHE, deltaTime);
+	}
+	if (glfwGetKey(this->_fenetre, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		camera->traitementClavier(DROITE, deltaTime);
+	}
 }
