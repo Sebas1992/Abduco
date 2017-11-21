@@ -37,6 +37,7 @@ public:
 		this->position = position;
 	}
 
+	// Methodes
 	void traitementClavier(mouvementCamera, float deltaTime);
 	void traitementSouris(double xpos, double ypos, float sensibilite);
 	void zoomSouris(double yOffset);

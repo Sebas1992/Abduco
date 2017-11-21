@@ -43,6 +43,7 @@ void Camera::traitementClavier(mouvementCamera direction, float deltaTime)
 	{
 		position += axe_X * velocite;
 	}
+	position.y = 0.0f;
 }
 
 void Camera::traitementSouris(double xpos, double ypos, float sensibilite)

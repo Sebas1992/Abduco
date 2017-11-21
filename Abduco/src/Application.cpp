@@ -13,7 +13,7 @@
 
 #include "Application.h"
 
-Application::Application() 
+Application::Application()
 {
     
     //Set-up de GLFW
@@ -253,7 +253,7 @@ void Application::processInput(GLFWwindow* fenetre)
 	}
 	if (glfwGetKey(this->_fenetre, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		camera->traitementClavier(GAUCHE, deltaTime);
+		camera-> traitementClavier(GAUCHE, deltaTime);
 	}
 	if (glfwGetKey(this->_fenetre, GLFW_KEY_D) == GLFW_PRESS)
 	{
