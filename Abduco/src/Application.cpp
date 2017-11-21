@@ -44,12 +44,15 @@ Application::Application()
         std::cerr << "Failed to initialize GLAD" << std::endl;
     }    
     
+	glfwSetInputMode(_fenetre, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(_fenetre, mouseCallback);
+	glfwSetScrollCallback(_fenetre, scrollCallback);
     glViewport(0, 0, LARGEUR, HAUTEUR);
 }
 
 Application::~Application() 
 {
-	delete this->camera;
+	delete camera;
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glfwTerminate();
@@ -183,7 +186,7 @@ void Application::render()
 	glm::mat4 modele;
 	glm::mat4 projection;
 	modele = glm::rotate(modele, glm::radians((float)glfwGetTime() * 50), glm::vec3(0.5f, 1.0f, 0.0f));
-	projection = glm::perspective(glm::radians(45.0f), (float)LARGEUR / (float)HAUTEUR, 0.1f, 100.0f);
+	projection = glm::perspective(camera->get_fov(), (float)LARGEUR / (float)HAUTEUR, 0.1f, 100.0f);
 
 	float rayon = 10.0f;
 	float camX = sin(glfwGetTime()) * rayon;
@@ -256,4 +259,14 @@ void Application::processInput(GLFWwindow* fenetre)
 	{
 		camera->traitementClavier(DROITE, deltaTime);
 	}
+}
+
+void Application::mouseCallback(GLFWwindow* window, double xpos, double ypos)
+{
+	camera->traitementSouris(xpos, ypos, sensibiliteSouris);
+}
+
+void Application::scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
+{
+	camera->zoomSouris(yOffset);
 }

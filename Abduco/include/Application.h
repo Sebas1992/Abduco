@@ -30,17 +30,21 @@
 #include<iostream>
 #include"Shader.h"
 
+static const float sensibiliteSouris = 0.05f;
+static Camera* camera = new Camera();
+
 class Application {
 public:
     Application();
     virtual ~Application();
 	static void errorCallback(int error, const char* err_str);
+	static void mouseCallback(GLFWwindow* window, double xpos, double ypos);
+	static void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
     static void GLClearError();
     static void GLCheckError();
     void run();
     void processInput(GLFWwindow* fenetre);
     void render();
-
 
 private:
     const int HAUTEUR = 650;
@@ -50,7 +54,6 @@ private:
     Shader* shaderProgram;
     TextureJPEG* texture1;
     TexturePNG* texture2;
-	Camera* camera;
 	float deltaTime;
 	float lastFrame;
 	float currentFrame;
