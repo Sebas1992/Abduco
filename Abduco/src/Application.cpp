@@ -57,8 +57,6 @@ Application::~Application()
     glDeleteBuffers(1, &VBO);
     glfwTerminate();
     delete shaderProgram;
-    delete texture1;
-    delete texture2;
 }
 
 void Application::errorCallback(int error, const char* err_str)
@@ -68,56 +66,50 @@ void Application::errorCallback(int error, const char* err_str)
 
 void Application::run()
 {   
-	float vertices[] = {
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-		0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+		float vertices[] = {
+		-0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f, -0.5f,
+		0.5f,  0.5f, -0.5f,
+		0.5f,  0.5f, -0.5f,
+		-0.5f,  0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
 
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,
+		0.5f, -0.5f,  0.5f,
+		0.5f,  0.5f,  0.5f,
+		0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f, -0.5f,  0.5f,
 
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
 
-		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f,  0.5f,
+		0.5f,  0.5f, -0.5f,
+		0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f,  0.5f,
+		0.5f,  0.5f,  0.5f,
 
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f,  0.5f,
+		0.5f, -0.5f,  0.5f,
+		-0.5f, -0.5f,  0.5f,
+		-0.5f, -0.5f, -0.5f,
 
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+		-0.5f,  0.5f, -0.5f,
+		0.5f,  0.5f, -0.5f,
+		0.5f,  0.5f,  0.5f,
+		0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f, -0.5f,
 	};
     
-	/*
-    const unsigned int indices[] = {
-        0, 1, 2, 
-        0, 3, 2
-    };
-     */
     //VAO
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -127,36 +119,24 @@ void Application::run()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), (void*)0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), (void*)(3*sizeof(GLfloat)));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), (void*)0);
     glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-   
-	/*
-    //EBO
-    glGenBuffers(1, &EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-    */
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
     glBindVertexArray(0);
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     
-    shaderProgram = new Shader("./Shaders/vertex.vs", "./Shaders/fragment.fs");
-    
-    //Texture
-    texture1 = new TextureJPEG("./Image/container.jpg");
-    texture2 = new TexturePNG("./Image/awesomeface.png");
-    
-    //Dit a OpenGL quel sampler dans le shader correspond a quel texture
-    shaderProgram->utiliserProgramme();
-    glUniform1i(glGetUniformLocation(shaderProgram->get_program(), "texture1"), 0);
-    glUniform1i(glGetUniformLocation(shaderProgram->get_program(), "texture2"), 1);
+	// VAOlightning
+	glGenVertexArrays(1, &lightVAO);
+	glBindVertexArray(lightVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 
 	glEnable(GL_DEPTH_TEST);
 
-	//Initialisation de la fenetre
-	camera = new Camera();
+	shaderProgram = new Shader("./Shaders/vertex.vs", "./Shaders/fragment.fs");
+	shaderLumiere = new Shader("./Shaders/vertexLumiere.vs", "./Shaders/fragmentLumiere.fs");
 
     while(!glfwWindowShouldClose(_fenetre))
     {
@@ -171,55 +151,62 @@ void Application::run()
         glfwSwapBuffers(_fenetre);
         glfwPollEvents();
     }
-    
     glBindVertexArray(0);
 }
 
 void Application::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	
+	// Couleur 
+	glm::vec3 lumiere = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 objet = glm::vec3(1.0f, 0.5f, 0.31f);
 
+	//Cube
 	shaderProgram->utiliserProgramme();
 	glBindVertexArray(VAO);
     
 	glm::mat4 modele;
 	glm::mat4 projection;
-	modele = glm::rotate(modele, glm::radians((float)glfwGetTime() * 50), glm::vec3(0.5f, 1.0f, 0.0f));
 	projection = glm::perspective(camera->get_fov(), (float)LARGEUR / (float)HAUTEUR, 0.1f, 100.0f);
-
-	float rayon = 10.0f;
-	float camX = sin(glfwGetTime()) * rayon;
-	float camZ = cos(glfwGetTime()) * rayon;
 
 	unsigned int modeleLocation = glGetUniformLocation(shaderProgram->get_program(), "modele");
 	unsigned int vueLocation = glGetUniformLocation(shaderProgram->get_program(), "vue");
 	unsigned int projectionLocation = glGetUniformLocation(shaderProgram->get_program(), "projection");
+	unsigned int couleurObjet = glGetUniformLocation(shaderProgram->get_program(), "couleurCube");
+	unsigned int couleurLumiere = glGetUniformLocation(shaderProgram->get_program(), "couleurLumiere");
 
-	//glUniformMatrix4fv(modeleLocation, 1, GL_FALSE, glm::value_ptr(modele));
 	glUniformMatrix4fv(vueLocation, 1, GL_FALSE, glm::value_ptr(camera->get_vue()));
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
-
-    // Determine quelles texture ut lier et les lie
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1->get_texture());
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture2->get_texture());
-	
-	for (int i = 0; i < 10; i++)
-	{
-		glm::mat4 modele;
-		float angle = 20.0f * i;
-		modele = glm::translate(modele, cubePositions[i]);
-		modele = glm::rotate(modele, glm::radians(angle) * (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.0f));
-		glUniformMatrix4fv(modeleLocation, 1, GL_FALSE, glm::value_ptr(modele));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-	}
+	glUniformMatrix4fv(modeleLocation, 1, GL_FALSE, glm::value_ptr(modele));
+	glUniform3fv(couleurLumiere, 1, glm::value_ptr(lumiere));
+	glUniform3fv(couleurObjet, 1, glm::value_ptr(objet));
 
 	GLClearError();
-
-    //glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
     GLCheckError();
+
+	// Lumiere
+	shaderLumiere->utiliserProgramme();
+	glBindVertexArray(lightVAO);
+
+	glm::mat4 modeleLumiere;
+	modeleLumiere = glm::translate(modeleLumiere, glm::vec3(1.2f, 1.0f, -2.0f));
+
+	modeleLocation = glGetUniformLocation(shaderLumiere->get_program(), "modele");
+	vueLocation = glGetUniformLocation(shaderLumiere->get_program(), "vue");
+	projectionLocation = glGetUniformLocation(shaderLumiere->get_program(), "projection");
+
+	projection = glm::perspective(camera->get_fov(), (float)LARGEUR / (float)HAUTEUR, 0.1f, 100.0f);
+
+	glUniformMatrix4fv(vueLocation, 1, GL_FALSE, glm::value_ptr(camera->get_vue()));
+	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(modeleLocation, 1, GL_FALSE, glm::value_ptr(modeleLumiere));
+
+	GLClearError();
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	GLCheckError();
 }
 
 void Application::GLClearError()
