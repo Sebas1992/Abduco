@@ -13,6 +13,6 @@ uniform mat4 modele;
 void main()
 {
 	fragpos = vec3(modele * vec4(pos, 1.0f));
-	normal = anormal;
+	normal = mat3(transpose(inverse(modele))) * anormal;
     gl_Position = projection * vue * vec4(fragpos, 1.0);
 }
