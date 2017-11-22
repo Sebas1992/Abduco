@@ -59,6 +59,7 @@ private:
 	float lastFrame;
 	float currentFrame;
 	float vitesseCamera;
+	glm::vec3 posLumiere;
 };
 
 #endif /* Application_H */
