@@ -66,7 +66,6 @@ void Application::errorCallback(int error, const char* err_str)
 
 void Application::run()
 {   
-
 	float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 		0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -183,6 +182,7 @@ void Application::render()
 	unsigned int couleurObjet = glGetUniformLocation(shaderProgram->get_program(), "couleurCube");
 	unsigned int couleurLumiere = glGetUniformLocation(shaderProgram->get_program(), "couleurLumiere");
 	unsigned int lumiereLocation = glGetUniformLocation(shaderProgram->get_program(), "posLumiere");
+	unsigned int cameraPosLocation = glGetUniformLocation(shaderProgram->get_program(), "posCamera");
 
 	glUniformMatrix4fv(vueLocation, 1, GL_FALSE, glm::value_ptr(camera->get_vue()));
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
@@ -190,7 +190,8 @@ void Application::render()
 	glUniform3fv(lumiereLocation, 1, glm::value_ptr(posLumiere));
 	glUniform3fv(couleurLumiere, 1, glm::value_ptr(lumiere));
 	glUniform3fv(couleurObjet, 1, glm::value_ptr(objet));
-
+	GLfloat positionCamera[3] = { camera->get_position().x, camera->get_position().y, camera->get_position().z };
+	glUniform3fv(cameraPosLocation, 1, positionCamera);
 
 	GLClearError();
 	glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -202,6 +203,7 @@ void Application::render()
 
 	glm::mat4 modeleLumiere;
 	modeleLumiere = glm::translate(modeleLumiere, posLumiere);
+	modeleLumiere = glm::scale(modeleLumiere, glm::vec3(0.2f, 0.2f, 0.2f));
 
 	modeleLocation = glGetUniformLocation(shaderLumiere->get_program(), "modele");
 	vueLocation = glGetUniformLocation(shaderLumiere->get_program(), "vue");

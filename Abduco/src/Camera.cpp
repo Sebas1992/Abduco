@@ -98,13 +98,14 @@ void Camera::updateVectors()
 
 void Camera::zoomSouris(double yOffset)
 {
+	std::cout << fov << std::endl;
 	if (fov >= 1.0f && fov <= 45.0f)
 	{
 		fov -= yOffset * 0.05f;
 	}
-	if (fov <= 1.0f)
+	if (fov <= 44.0f)
 	{
-		fov = 1.0f;
+		fov = 44.0f;
 	}
 	if (fov >= 45.0f)
 	{
